@@ -3,9 +3,26 @@
 
 <template>
   <header>
-    <h1>Ambroisie</h1>
+    <h1>
+      <RouterLink to="/">Ambroisie</RouterLink>
+    </h1>
+    <nav>
+      <ol>
+        <li>
+          <RouterLink to="/connexion">Se connecter</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/admin">Panneau d'administration</RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/recettes">Recettes</RouterLink>
+        </li>
+      </ol>
+    </nav>
   </header>
-  <main></main>
+  <main>
+    <RouterView />
+  </main>
   <footer>
     <p>
       <small>
@@ -17,6 +34,19 @@
 </template>
 
 <style scoped>
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+header ol {
+  display: flex;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
 footer {
   text-align: center;
 }
