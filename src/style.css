@@ -1,6 +1,7 @@
 *,
 ::before,
 ::after {
+  border-width: 0;
   box-sizing: border-box;
 }
 
@@ -10,7 +11,17 @@
 }
 
 html {
+  --background: #FAFBFC;
+  --background-highlight: #0052CC;
+  --stroke: #DFE1E6;
+  -moz-tab-size: 4;
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.5;
+  tab-size: 4;
+}
+
+body {
+  line-height: inherit;
 }
 
 #app {
@@ -28,13 +39,61 @@ ul {
   list-style: none;
 }
 
+button,
+input,
+select,
+textarea {
+  color: inherit;
+  font-family: inherit;
+  font-size: 100%;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+button,
+select {
+  text-transform: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: 1;
+}
+
+textarea {
+  resize: vertical;
+}
+
 img,
 svg {
   display: block;
+}
+
+img {
   height: auto;
   max-width: 100%;
 }
 
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
 small {
   font-size: 80%;
+}
+
+.input {
+  border: 1px solid var(--stroke);
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+}
+
+.btn {
+  background-color: var(--background-highlight);
 }

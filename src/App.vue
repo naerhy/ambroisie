@@ -1,27 +1,35 @@
 <script setup lang="ts">
+import { onMounted, ref } from "vue";
+import axios from "axios";
+import { authStore, mealsStore } from "./stores";
+import Cookies from "js-cookie";
+import Header from "./components/Header.vue";
+
+import type { Meal } from "./shared";
+
+const isFetching = ref(true);
+
+const token = Cookies.get("token");
+if (token) {
+  authStore.updateToken(token);
+}
+
+onMounted(async () => {
+  try {
+    const res = await axios.get<Meal[]>("https://naerhy.ovh/ambroisie/meals");
+    mealsStore.setMeals(res.data);
+    isFetching.value = false;
+  } catch (err) {
+    console.error(err);
+  }
+});
 </script>
 
 <template>
-  <header>
-    <h1>
-      <RouterLink to="/">Ambroisie</RouterLink>
-    </h1>
-    <nav>
-      <ol>
-        <li>
-          <RouterLink to="/connexion">Se connecter</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/admin">Panneau d'administration</RouterLink>
-        </li>
-        <li>
-          <RouterLink to="/recettes">Recettes</RouterLink>
-        </li>
-      </ol>
-    </nav>
-  </header>
+  <Header />
   <main>
-    <RouterView />
+    <div v-if="isFetching">Chargement...</div>
+    <RouterView v-else />
   </main>
   <footer>
     <p>
@@ -34,15 +42,6 @@
 </template>
 
 <style scoped>
-header {
-  display: flex;
-  justify-content: space-between;
-}
-
-header ol {
-  display: flex;
-}
-
 main {
   flex: 1 1 auto;
 }

@@ -1,12 +1,12 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomePage from "./pages/HomePage.vue";
-import RecipesPage from "./pages/RecipesPage.vue";
+import MealsPage from "./pages/MealsPage.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import AdminPage from "./pages/AdminPage.vue";
 
 const routes = [
   { path: "/", component: HomePage },
-  { path: "/recettes", component: RecipesPage },
+  { path: "/repas", component: MealsPage },
   { path: "/connexion", component: LoginPage },
   { path: "/admin", component: AdminPage }
 ];

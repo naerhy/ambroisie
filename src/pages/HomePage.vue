@@ -4,6 +4,6 @@
     <p>
       TODO: remplir par du texte.
     </p>
-    <RouterLink to="/recettes">Recettes</RouterLink>
+    <RouterLink to="/repas">Recettes</RouterLink>
   </section>
 </template>
