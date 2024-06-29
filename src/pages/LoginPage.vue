@@ -49,7 +49,7 @@ async function handleSubmit() {
   </section>
 </template>
 
-<style>
+<style scoped>
 section {
   margin: 4rem auto 0 auto;
   max-width: 600px;
