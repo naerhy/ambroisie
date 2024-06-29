@@ -20,14 +20,12 @@ function handleDisconnect() {
     <div>
       <nav>
         <ul>
-          <li v-if="!authStore.token">
-            <RouterLink to="/connexion">Se connecter</RouterLink>
-          </li>
-          <li v-else>
-            <RouterLink to="/admin">Panneau d'administration</RouterLink>
+          <li>
+            <RouterLink v-if="!authStore.token" to="/connexion">Se connecter</RouterLink>
+            <RouterLink v-else to="/admin">Panneau d'administration</RouterLink>
           </li>
           <li>
-            <RouterLink to="/repas">Recettes</RouterLink>
+            <RouterLink to="/repas">Liste de repas</RouterLink>
           </li>
         </ul>
       </nav>
@@ -38,8 +36,13 @@ function handleDisconnect() {
 
 <style scoped>
 header {
+  align-items: center;
   display: flex;
   justify-content: space-between;
+}
+
+h1 {
+  color: var(--text-highlight);
 }
 
 div {
@@ -50,5 +53,9 @@ div {
 ul {
   column-gap: 1rem;
   display: flex;
+}
+
+.router-link-exact-active {
+  color: var(--text-highlight);
 }
 </style>

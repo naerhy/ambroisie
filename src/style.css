@@ -255,7 +255,8 @@ html {
   --background-error: #ff8f73;
   --text-primary: #172b4d;
   --text-secondary: #344563;
-  --text-highlight: #fafbfc;
+  --text-highlight: #0052cc;
+  --text-on-highlight: #fafbfc;
   --text-error: #bf2600;
   --stroke: #DFE1E6;
   --stroke-highlight: #0052cc;
@@ -320,7 +321,7 @@ h2 {
   background-color: var(--background-highlight);
   border: 1px solid var(--background-highlight);
   border-radius: 0.25rem;
-  color: var(--text-highlight);
+  color: var(--text-on-highlight);
   padding: 0.5rem 0.75rem;
 }
 
