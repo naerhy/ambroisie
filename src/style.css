@@ -250,8 +250,30 @@ video {
 
 html {
   --background: #fafbfc;
-  --background-highlight: #0052CC;
+  --background-highlight: #0052cc;
+  --background-highlight-darker: #0747a6;
+  --background-error: #ff8f73;
+  --text-primary: #172b4d;
+  --text-secondary: #344563;
+  --text-highlight: #fafbfc;
+  --text-error: #bf2600;
   --stroke: #DFE1E6;
+  --stroke-highlight: #0052cc;
+  --stroke-error: #bf2600;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 2.5rem;
+}
+
+h2 {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 2.25rem;
 }
 
 #app {
@@ -264,12 +286,45 @@ html {
   row-gap: 2rem;
 }
 
+.form-control {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.2rem;
+}
+
 .input {
   border: 1px solid var(--stroke);
   border-radius: 0.25rem;
-  padding: 0.25rem;
+  padding: 0.5rem 0.75rem;
+}
+
+.input[aria-invalid="true"] {
+  border: 1px solid var(--stroke-error);
+}
+
+.input:focus {
+  outline: none;
+  border: 1px solid var(--stroke-highlight);
+  box-shadow: 0 0 0 0.25rem rgba(0, 82, 204, 0.25);
+}
+
+.input:focus[aria-invalid="true"] {
+  border: 1px solid var(--stroke-error);
+  box-shadow: 0 0 0 0.25rem rgba(191, 38, 0, 0.25);
 }
 
 .btn {
   background-color: var(--background-highlight);
+  border: 1px solid var(--background-highlight);
+  border-radius: 0.25rem;
+  color: var(--text-highlight);
+  padding: 0.5rem 0.75rem;
+}
+
+.btn:hover {
+  background-color: var(--background-highlight-darker);
+}
+
+.text-error {
+  color: var(--text-error);
 }
