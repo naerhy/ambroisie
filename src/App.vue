@@ -1,35 +1,18 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import axios from "axios";
-import { authStore, mealsStore } from "./stores";
+import { authStore } from "./stores";
 import Cookies from "js-cookie";
 import Header from "./components/Header.vue";
-
-import type { Meal } from "./shared";
-
-const isFetching = ref(true);
 
 const token = Cookies.get("token");
 if (token) {
   authStore.updateToken(token);
 }
-
-onMounted(async () => {
-  try {
-    const res = await axios.get<Meal[]>("https://naerhy.ovh/ambroisie/meals");
-    mealsStore.setMeals(res.data);
-    isFetching.value = false;
-  } catch (err) {
-    console.error(err);
-  }
-});
 </script>
 
 <template>
   <Header />
   <main>
-    <div v-if="isFetching">Chargement...</div>
-    <RouterView v-else />
+    <RouterView />
   </main>
   <footer>
     <p>
@@ -47,6 +30,7 @@ main {
 }
 
 footer {
+  padding: 0.5rem 0;
   text-align: center;
 }
 </style>
