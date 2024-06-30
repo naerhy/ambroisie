@@ -34,6 +34,10 @@ section > div {
   row-gap: 1rem;
 }
 
+p {
+  color: var(--text-secondary);
+}
+
 a {
   align-self: center;
 }
