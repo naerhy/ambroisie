@@ -2,6 +2,9 @@
 import { authStore } from "./stores";
 import Cookies from "js-cookie";
 import Header from "./components/Header.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
 
 const token = Cookies.get("token");
 if (token) {
@@ -11,7 +14,7 @@ if (token) {
 
 <template>
   <Header />
-  <main>
+  <main :class="{ 'meals-page': route.path === '/repas' }">
     <RouterView />
   </main>
   <footer>
@@ -27,6 +30,11 @@ if (token) {
 <style scoped>
 main {
   flex: 1 1 auto;
+}
+
+.meals-page {
+  column-gap: 1rem;
+  display: flex;
 }
 
 footer {

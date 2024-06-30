@@ -1,7 +1,5 @@
 import { reactive } from "vue";
 
-import type { Meal } from "./shared";
-
 interface AuthStore {
   token: string | null;
   updateToken(token: string | null): void;
@@ -14,14 +12,20 @@ export const authStore: AuthStore = reactive({
   }
 });
 
-interface MealsStore {
-  meals: Meal[];
-  setMeals(meals: Meal[]): void;
+interface Filters {
+  name: string;
+  types: number[];
+  difficulties: number[];
+  cookingTimes: number[];
+  vegetarian: boolean;
 }
 
-export const mealsStore: MealsStore = reactive({
-  meals: [] as Meal[],
-  setMeals(meals) {
-    this.meals = meals;
+export const filtersStore: { filters: Filters } = reactive({
+  filters: {
+    name: "",
+    types: [0, 1, 2, 3],
+    difficulties: [0, 1, 2],
+    cookingTimes: [0, 1, 2, 3],
+    vegetarian: false
   }
 });

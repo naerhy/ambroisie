@@ -5,19 +5,17 @@ export interface Meal {
   difficulty: number;
   cookingTime: number;
   isVegetarian: boolean;
-  recipe: string | null;
+  recipe: Recipe | null;
   filename: string;
   photoURL: string;
   thumbnailURL: string;
 }
 
-/*
-interface Recipe {
+export interface Recipe {
   servings: number;
   ingredients: string;
   directions: string;
 }
-*/
 
 export const types = ["Petit-déjeuner", "Déjeuner", "Goûter", "Dîner"];
 export const difficulties = ["Facile", "Moyenne", "Difficile"];
