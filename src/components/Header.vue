@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import Cookies from "js-cookie";
-import { authStore } from "../stores";
+import { store } from "../store";
 
 const router = useRouter();
 
 function handleDisconnect() {
   Cookies.remove("token");
-  authStore.updateToken(null);
+  store.token = null;
   router.push("/");
 }
 </script>
@@ -21,7 +21,7 @@ function handleDisconnect() {
       <nav>
         <ul>
           <li>
-            <RouterLink v-if="!authStore.token" to="/connexion">Se connecter</RouterLink>
+            <RouterLink v-if="!store.token" to="/connexion">Se connecter</RouterLink>
             <RouterLink v-else to="/admin">Panneau d'administration</RouterLink>
           </li>
           <li>
@@ -29,7 +29,7 @@ function handleDisconnect() {
           </li>
         </ul>
       </nav>
-      <button v-if="authStore.token" type="button" @click="handleDisconnect">Déconnexion</button>
+      <button v-if="store.token" type="button" @click="handleDisconnect">Déconnexion</button>
     </div>
   </header>
 </template>

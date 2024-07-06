@@ -4,7 +4,7 @@ export interface Meal {
   types: number[];
   difficulty: number;
   cookingTime: number;
-  isVegetarian: boolean;
+  vegetarian: boolean;
   recipe: Recipe | null;
   filename: string;
   photoURL: string;
@@ -15,6 +15,10 @@ export interface Recipe {
   servings: number;
   ingredients: string;
   directions: string;
+}
+
+export interface Inputs extends Omit<Meal, "id" | "filename" | "photoURL" | "thumbnailURL"> {
+  photoBase64?: string;
 }
 
 export const types = ["Petit-déjeuner", "Déjeuner", "Goûter", "Dîner"];

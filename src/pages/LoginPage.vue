@@ -1,27 +1,28 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import Cookies from "js-cookie";
-import { authStore } from "../stores";
+import { store } from "../store";
 import { useRouter } from "vue-router";
 import { useAxios } from "../composables";
 
 const router = useRouter();
 
-const { errMsg, fetch } = useAxios();
+const { data, error, fetch } = useAxios<{ token: string }>();
 
 const password = ref("");
 
 async function handleSubmit() {
-  const data = await fetch<{ token: string }>({
+  await fetch({
     method: "POST",
     url: "https://naerhy.ovh/ambroisie/auth",
     data: {
       password: password.value
     }
   });
-  if (data) {
-    Cookies.set("token", data.token, { expires: 7 }); // TODO: add secure + sameSite
-    authStore.updateToken(data.token);
+  if (data.value) {
+    const { token } = data.value;
+    Cookies.set("token", token, { expires: 7 }); // TODO: add secure + sameSite
+    store.token = token;
     router.push("/");
   } else {
     password.value = "";
@@ -39,10 +40,10 @@ async function handleSubmit() {
           class="input"
           type="password"
           v-model="password"
-          :aria-invalid="errMsg ? 'true' : 'false'"
+          :aria-invalid="error ? 'true' : 'false'"
           required
         />
-        <small v-if="errMsg" class="text-error">{{ errMsg }}</small>
+        <small v-if="error" class="text-error">{{ error.message }}</small>
       </label>
       <button class="btn">Connexion</button>
     </form>

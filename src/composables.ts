@@ -1,26 +1,34 @@
-import axios from "axios";
 import { ref } from "vue";
-import { authStore } from "./stores";
-import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
+import axios from "axios";
+import { store } from "./store";
+import Cookies from "js-cookie";
 
+import type { Ref } from "vue";
 import type { AxiosRequestConfig } from "axios";
 
 interface HTTPError {
-  statusCode: number;
+  statusCode?: number;
   message: string;
 }
 
-export function useAxios() {
+interface ComposableOptions {
+  immediate: boolean;
+}
+
+// TODO: add abort signal on unMounted
+export function useAxios<T>(opts: ComposableOptions = { immediate: false }) {
   const router = useRouter();
+  const isFetching = ref(opts.immediate);
+  const data: Ref<T | null> = ref(null);
+  const error = ref<HTTPError | null>(null);
 
-  const errMsg = ref("");
-  const isFetching = ref(false);
-
-  async function fetch<T>(config: AxiosRequestConfig) {
-    try {
+  async function fetch(config: AxiosRequestConfig) {
+    if (!isFetching.value) {
       isFetching.value = true;
-      return (await axios<T>(config)).data;
+    }
+    try {
+      data.value = (await axios<T>(config)).data;
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response) {
@@ -29,24 +37,24 @@ export function useAxios() {
             // TODO: create function to connect and disconnect users instead of having to
             // repeat/import the same code in different places
             Cookies.remove("token");
-            authStore.updateToken(null);
+            store.token = null;
             router.push("/");
             // TODO: add notification
           } else {
-            errMsg.value = httpError.message;
+            error.value = httpError;
           }
         } else {
-          errMsg.value = err.message;
+          error.value = { message: err.message };
         }
       } else {
-        errMsg.value = err instanceof Error ? err.message : "Une erreur inattendue s'est produite";
+        error.value = {
+          message: err instanceof Error ? err.message : "Une erreur inattendue s'est produite"
+        };
       }
     } finally {
       isFetching.value = false;
     }
   }
 
-  // TODO: add abort signal on unMounted
-
-  return { errMsg, isFetching, fetch };
+  return { isFetching, data, error, fetch };
 }

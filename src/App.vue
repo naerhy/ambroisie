@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { authStore } from "./stores";
+import { store } from "./store";
 import Cookies from "js-cookie";
 import Header from "./components/Header.vue";
+import Notifications from "./components/Notifications.vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
 
 const token = Cookies.get("token");
 if (token) {
-  authStore.updateToken(token);
+  store.token = token;
 }
 </script>
 
@@ -16,6 +17,7 @@ if (token) {
   <Header />
   <main :class="{ 'meals-page': route.path === '/repas' }">
     <RouterView />
+    <Notifications />
   </main>
   <footer>
     <p>

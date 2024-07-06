@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import { cookingTimes, difficulties, types } from "../shared";
 import { useAxios } from "../composables";
-import { filtersStore } from "../stores";
+import { store } from "../store";
 import Loading from "../components/Loading.vue";
 
 import type { Meal } from "../shared";
@@ -11,28 +11,25 @@ interface MealWithVisibility extends Meal {
   isVisible: boolean;
 }
 
-const { errMsg, isFetching, fetch } = useAxios();
+const { isFetching, data, error, fetch } = useAxios<Meal[]>({ immediate: true });
 
 const meals = ref<MealWithVisibility[]>([]);
 
 onMounted(async () => {
-  const data = await fetch<Meal[]>({
-    method: "GET",
-    url: "https://naerhy.ovh/ambroisie/meals"
-  });
-  if (data) {
-    meals.value = data.map((meal) => ({ ...meal, isVisible: true }));
+  await fetch({ method: "GET", url: "https://naerhy.ovh/ambroisie/meals" });
+  if (data.value) {
+    meals.value = data.value.map((meal) => ({ ...meal, isVisible: true }));
   }
 });
 
 // FIXME: if filters are updated while meals are still not loaded => it won't be taking in account
-watch(() => filtersStore.filters, (filters) => {
+watch(() => store.filters, (filters) => {
   for (const meal of meals.value) {
     meal.isVisible = meal.name.toLowerCase().includes(filters.name.toLowerCase()) &&
       meal.types.some((type) => filters.types.includes(type)) &&
       filters.difficulties.includes(meal.difficulty) &&
       filters.cookingTimes.includes(meal.cookingTime) &&
-      (!filters.vegetarian || meal.isVegetarian);
+      (!filters.vegetarian || meal.vegetarian);
   }
 }, { deep: true });
 </script>
@@ -42,14 +39,14 @@ watch(() => filtersStore.filters, (filters) => {
     <input
       type="text"
       class="input"
-      v-model="filtersStore.filters.name"
+      v-model="store.filters.name"
       placeholder="Filter par nom"
     />
     <div>
       <div>Type</div>
       <div v-for="(t, i) in types">
         <label>
-          <input type="checkbox" :value="i" v-model="filtersStore.filters.types" />
+          <input type="checkbox" :value="i" v-model="store.filters.types" />
           {{ t }}
         </label>
       </div>
@@ -58,7 +55,7 @@ watch(() => filtersStore.filters, (filters) => {
       <div>Difficulté</div>
       <div v-for="(d, i) in difficulties">
         <label>
-          <input type="checkbox" :value="i" v-model="filtersStore.filters.difficulties" />
+          <input type="checkbox" :value="i" v-model="store.filters.difficulties" />
           {{ d }}
         </label>
       </div>
@@ -67,14 +64,14 @@ watch(() => filtersStore.filters, (filters) => {
       <div>Temps de préparation</div>
       <div v-for="(c, i) in cookingTimes">
         <label>
-          <input type="checkbox" :value="i" v-model="filtersStore.filters.cookingTimes" />
+          <input type="checkbox" :value="i" v-model="store.filters.cookingTimes" />
           {{ c }}
         </label>
       </div>
     </div>
     <div>
       <label>
-        <input type="checkbox" v-model="filtersStore.filters.vegetarian" />
+        <input type="checkbox" v-model="store.filters.vegetarian" />
         Convient aux végétariens
       </label>
     </div>
@@ -82,7 +79,7 @@ watch(() => filtersStore.filters, (filters) => {
   <section>
     <h2>Liste de repas</h2>
     <Loading v-if="isFetching" content="Chargement" />
-    <div v-else-if="errMsg">{{ errMsg }}</div>
+    <div v-else-if="error">{{ error.message }}</div>
     <ul v-else-if="meals.length">
       <li v-for="meal in meals" v-show="meal.isVisible" :key="meal.id">
         <img :src="meal.thumbnailURL" :alt="`Photo du repas ${meal.name}`" />

@@ -254,14 +254,17 @@ html {
   --background-darker: #f4f5f7;
   --background-highlight: #0052cc;
   --background-highlight-darker: #0747a6;
-  --background-error: #ff8f73;
+  --background-success: #e3fcef;
+  --background-error: #ffebe6;
   --text-primary: #172b4d;
   --text-secondary: #344563;
   --text-highlight: #0052cc;
   --text-on-highlight: #fafbfc;
+  --text-success: #006644;
   --text-error: #bf2600;
-  --stroke: #DFE1E6;
+  --stroke: #dfe1e6;
   --stroke-highlight: #0052cc;
+  --stroke-success: #006644;
   --stroke-error: #bf2600;
   background-color: var(--background);
   color: var(--text-primary);
@@ -269,7 +272,10 @@ html {
 
 h1,
 h2,
-h3 {
+h3,
+h4,
+h5,
+h6 {
   font-weight: 700;
 }
 
@@ -299,24 +305,32 @@ h2 {
   row-gap: 0.2rem;
 }
 
-.input {
+.input,
+.select,
+.textarea {
   background-color: var(--background-darker);
   border: 1px solid var(--stroke);
   border-radius: 0.25rem;
   padding: 0.5rem 0.75rem;
 }
 
-.input[aria-invalid="true"] {
+.input[aria-invalid="true"],
+.select[aria-invalid="true"],
+.textarea[aria-invalid="true"] {
   border: 1px solid var(--stroke-error);
 }
 
-.input:focus {
-  outline: none;
+.input:focus,
+.select:focus,
+.textarea:focus {
   border: 1px solid var(--stroke-highlight);
   box-shadow: 0 0 0 0.25rem rgba(0, 82, 204, 0.25);
+  outline: none;
 }
 
-.input:focus[aria-invalid="true"] {
+.input:focus[aria-invalid="true"],
+.select:focus[aria-invalid="true"],
+.textarea:focus[aria-invalid="true"] {
   border: 1px solid var(--stroke-error);
   box-shadow: 0 0 0 0.25rem rgba(191, 38, 0, 0.25);
 }
