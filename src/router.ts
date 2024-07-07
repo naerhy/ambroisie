@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomePage from "./pages/HomePage.vue";
 import MealsPage from "./pages/MealsPage.vue";
+import MealPage from "./pages/MealPage.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import AdminPage from "./pages/AdminPage.vue";
 import AdminHomePage from "./pages/AdminHomePage.vue";
@@ -16,6 +17,11 @@ const routes = [
   {
     path: "/repas",
     component: MealsPage
+  },
+  {
+    path: "/repas/:id",
+    component: MealPage,
+    props: true
   },
   {
     path: "/connexion",
@@ -35,7 +41,8 @@ const routes = [
       },
       {
         path: "modifier/:id",
-        component: AdminModifyPage
+        component: AdminModifyPage,
+        props: true
       }
     ]
   },

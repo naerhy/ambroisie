@@ -82,10 +82,12 @@ watch(() => store.filters, (filters) => {
     <div v-else-if="error">{{ error.message }}</div>
     <ul v-else-if="meals.length">
       <li v-for="meal in meals" v-show="meal.isVisible" :key="meal.id">
-        <img :src="meal.thumbnailURL" :alt="`Photo du repas ${meal.name}`" />
-        <div>
-          <h3>{{ meal.name }}</h3>
-        </div>
+        <RouterLink :to="`/repas/${meal.id}`">
+          <img :src="meal.thumbnailURL" :alt="`Photo du repas ${meal.name}`" />
+          <div>
+            <h3>{{ meal.name }}</h3>
+          </div>
+        </RouterLink>
       </li>
     </ul>
     <div v-else>Aucun repas à afficher.</div>
@@ -127,7 +129,7 @@ li img {
   width: 100%;
 }
 
-li > div {
+li div {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;

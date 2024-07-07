@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useRoute } from "vue-router";
 import { useAxios } from "../composables";
 import { onMounted, ref } from "vue";
 import { store } from "../store";
@@ -8,7 +7,7 @@ import FileInput from "../components/FileInput.vue";
 
 import type { Inputs, Meal } from "../shared";
 
-const route = useRoute();
+const props = defineProps<{ id: string }>();
 
 const { isFetching, data: meal, error: errorGet, fetch: fetchGet } = useAxios<Meal>({ immediate: true });
 const { data: mealPatch, fetch: fetchPatch } = useAxios<Meal>();
@@ -17,13 +16,13 @@ const { data: mealPatchPhoto, fetch: fetchPatchPhoto } = useAxios<Meal>();
 const photoBase64 = ref("");
 
 onMounted(async () => {
-  await fetchGet({ method: "GET", url: `https://naerhy.ovh/ambroisie/meals/${route.params.id}` });
+  await fetchGet({ method: "GET", url: `https://naerhy.ovh/ambroisie/meals/${props.id}` });
 });
 
 async function handleSubmitModify(inputs: Inputs) {
   await fetchPatch({
     method: "PATCH",
-    url: `https://naerhy.ovh/ambroisie/meals/${route.params.id}`,
+    url: `https://naerhy.ovh/ambroisie/meals/${props.id}`,
     headers: {
       Authorization: `Bearer ${store.token}`
     },
@@ -37,7 +36,7 @@ async function handleSubmitModify(inputs: Inputs) {
 async function handleSubmitModifyPhoto() {
   await fetchPatchPhoto({
     method: "PATCH",
-    url: `https://naerhy.ovh/ambroisie/meals/photo/${route.params.id}`,
+    url: `https://naerhy.ovh/ambroisie/meals/photo/${props.id}`,
     headers: {
       Authorization: `Bearer ${store.token}`
     },

@@ -38,6 +38,10 @@ export function useAxios<T>(opts: ComposableOptions = { immediate: false }) {
             // repeat/import the same code in different places
             Cookies.remove("token");
             store.token = null;
+            store.notifs.push({
+              type: "error",
+              message: "Votre session a expiré, reconnectez-vous"
+            });
             router.push("/");
             // TODO: add notification
           } else {
