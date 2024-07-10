@@ -51,6 +51,9 @@ onMounted(async () => {
         </ol>
       </div>
     </div>
+    <div v-else class="no-recipe">
+      Ce repas ne posséde pas de recette.
+    </div>
   </section>
   <div v-else-if="error">{{ error.message }}</div>
   <div v-else>Chargement du repas...</div>
@@ -74,7 +77,7 @@ section {
 }
 
 img {
-  height: 300px;
+  height: 600px;
   object-fit: cover;
 }
 
@@ -83,13 +86,37 @@ img {
   display: flex;
 }
 
+ol,
 ul {
   list-style-position: inside;
-  list-style-type: circle;
+}
+
+ul {
+  list-style-type: disc;
 }
 
 ol {
-  list-style-position: inside;
   list-style-type: decimal;
+}
+
+.no-recipe {
+  text-align: center;
+}
+
+@media (max-width: 80rem) {
+  img {
+    height: 400px;
+  }
+
+  .ingr-dir {
+    flex-direction: column;
+    row-gap: 1rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  img {
+    height: 200px;
+  }
 }
 </style>
