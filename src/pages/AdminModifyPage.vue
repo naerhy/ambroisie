@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { useAxios } from "../composables";
+import { useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
 import { store } from "../store";
 import MealInputs from "../components/MealInputs.vue";
 import FileInput from "../components/FileInput.vue";
 
 import type { Inputs, Meal } from "../shared";
+
+const router = useRouter();
 
 const props = defineProps<{ id: string }>();
 
@@ -30,6 +33,7 @@ async function handleSubmitModify(inputs: Inputs) {
   });
   if (mealPatch.value) {
     store.notifs.push({ type: "success", message: `${mealPatch.value.name} a été mis à jour` });
+    router.push("/admin");
   }
 }
 
@@ -56,7 +60,7 @@ async function handleSubmitModifyPhoto() {
   <div v-else-if="errorGet">{{ errorGet.message }}</div>
   <template v-else>
     <section>
-      <h3>Modifier informations du repas</h3>
+      <h2>Modifier les informations du repas</h2>
       <MealInputs
         @submit-inputs="handleSubmitModify"
         :base-inputs="meal!"
@@ -65,7 +69,7 @@ async function handleSubmitModifyPhoto() {
       />
     </section>
     <section>
-      <h3>Modifier photo</h3>
+      <h2>Modifier la photo du repas</h2>
       <form @submit.prevent="handleSubmitModifyPhoto">
         <FileInput @file-change="(_photoBase64) => photoBase64 = _photoBase64" />
         <button class="btn">Modifier photo</button>
@@ -73,3 +77,17 @@ async function handleSubmitModifyPhoto() {
     </section>
   </template>
 </template>
+
+<style scoped>
+section:first-child {
+  margin-bottom: 4rem;
+}
+
+h2 {
+  margin-bottom: 1rem;
+}
+
+section:last-child button {
+  margin-top: 1rem;
+}
+</style>

@@ -37,7 +37,7 @@ async function handleSubmitInputs(inputs: Inputs) {
 
 <template>
   <section>
-    <h3>Ajouter admin</h3>
+    <h2>Ajouter un repas</h2>
     <MealInputs
       @submit-inputs="handleSubmitInputs"
       :base-inputs="baseMeal"
@@ -48,4 +48,7 @@ async function handleSubmitInputs(inputs: Inputs) {
 </template>
 
 <style scoped>
+h2 {
+  margin-bottom: 1rem;
+}
 </style>
