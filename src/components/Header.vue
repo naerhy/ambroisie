@@ -24,9 +24,6 @@ function handleDisconnect() {
             <RouterLink v-if="!store.token" to="/connexion">Se connecter</RouterLink>
             <RouterLink v-else to="/admin">Panneau d'administration</RouterLink>
           </li>
-          <li>
-            <RouterLink to="/repas">Liste de repas</RouterLink>
-          </li>
         </ul>
       </nav>
       <button v-if="store.token" type="button" @click="handleDisconnect">Déconnexion</button>
@@ -39,6 +36,7 @@ header {
   align-items: center;
   display: flex;
   justify-content: space-between;
+  padding: 0.2rem 0;
 }
 
 h1 {
