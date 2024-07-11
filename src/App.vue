@@ -15,7 +15,7 @@ if (token) {
 
 <template>
   <Header />
-  <main :class="{ 'meals-page': route.path === '/repas' }">
+  <main>
     <RouterView />
     <Notifications />
   </main>
@@ -32,11 +32,6 @@ if (token) {
 <style scoped>
 main {
   flex: 1 1 auto;
-}
-
-.meals-page {
-  column-gap: 1rem;
-  display: flex;
 }
 
 footer {

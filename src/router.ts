@@ -1,21 +1,16 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import HomePage from "./pages/HomePage.vue";
-import MealsPage from "./pages/MealsPage.vue";
 import MealPage from "./pages/MealPage.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import AdminPage from "./pages/AdminPage.vue";
 import AdminAddPage from "./pages/AdminAddPage.vue";
 import AdminModifyPage from "./pages/AdminModifyPage.vue";
-import NotFound from "./pages/NotFound.vue";
+import NotFoundPage from "./pages/NotFoundPage.vue";
 
 const routes = [
   {
     path: "/",
     component: HomePage
-  },
-  {
-    path: "/repas",
-    component: MealsPage
   },
   {
     path: "/repas/:id",
@@ -41,7 +36,7 @@ const routes = [
   },
   {
     path: "/:pathMatch(.*)*",
-    component: NotFound
+    component: NotFoundPage
   }
 ];
 
