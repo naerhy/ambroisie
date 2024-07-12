@@ -2,6 +2,8 @@
 import { onMounted, ref } from "vue";
 import { useAxios } from "../composables";
 import Modal from "../components/Modal.vue";
+import Error from "../components/Error.vue";
+import Loading from "../components/Loading.vue";
 import { store } from "../store";
 
 import type { Meal } from "../shared";
@@ -45,6 +47,7 @@ async function handleConfirmDelete(id: number) {
     <div class="confirm-delete">
       <h3>Confirmer</h3>
       <p>Confirmer la suppression du repas <b>{{ mealToDelete.name }}</b> ?</p>
+      <Error v-if="errorDelete" :message="errorDelete.message" />
       <div class="buttons">
         <button type="button" class="btn" @click="handleConfirmDelete(mealToDelete!.id)">Supprimer</button>
         <button type="button" class="btn" @click="mealToDelete = null">Annuler</button>
@@ -54,8 +57,8 @@ async function handleConfirmDelete(id: number) {
   <section>
     <h2>Page d'administration</h2>
     <RouterLink class="btn" to="/admin/ajouter">Ajouter une recette</RouterLink>
-    <div v-if="isFetching">Chargement des données...</div>
-    <div v-else-if="errorMeals">{{ errorMeals.message }}</div>
+    <Loading v-if="isFetching" content="Chargement des données" />
+    <Error v-else-if="errorMeals" :message="errorMeals.message" />
     <table v-else-if="meals?.length">
       <thead>
         <tr>

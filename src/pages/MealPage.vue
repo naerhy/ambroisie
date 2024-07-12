@@ -2,6 +2,8 @@
 import { onMounted } from "vue";
 import { useAxios } from "../composables";
 import { cookingTimes, difficulties, types } from "../shared";
+import Error from "../components/Error.vue";
+import Loading from "../components/Loading.vue";
 
 import type { Meal } from "../shared";
 
@@ -55,8 +57,8 @@ onMounted(async () => {
       Ce repas ne posséde pas de recette.
     </div>
   </section>
-  <div v-else-if="error">{{ error.message }}</div>
-  <div v-else>Chargement du repas...</div>
+  <Error v-else-if="error" :message="error.message" />
+  <Loading v-else content="Chargement du repas" />
 </template>
 
 <style scoped>
@@ -67,9 +69,10 @@ section {
 }
 
 .info {
+  column-gap: 2rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  row-gap: 0.5rem;
 }
 
 .info > div > div:first-child {

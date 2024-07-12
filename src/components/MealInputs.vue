@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { cookingTimes, difficulties, types } from "../shared";
 import FileInput from "./FileInput.vue";
+import Error from "../components/Error.vue";
 
 import type { Inputs } from "../shared";
 
@@ -9,6 +10,7 @@ const props = defineProps<{
   baseInputs: Inputs;
   withFileInput: boolean;
   btnText: string;
+  errorMsg?: string;
 }>();
 
 const emit = defineEmits<{ (e: "submitInputs", inputs: Inputs): void }>();
@@ -83,6 +85,9 @@ const inputs = ref(props.baseInputs);
       </template>
       <li v-if="withFileInput">
         <FileInput @file-change="(photoBase64) => inputs.photoBase64 = photoBase64" />
+      </li>
+      <li v-if="errorMsg">
+        <Error :message="errorMsg" />
       </li>
       <li>
         <button class="btn">{{ btnText }}</button>
