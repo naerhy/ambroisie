@@ -34,9 +34,11 @@ ul {
 
 li {
   border-radius: 0.25rem;
-  column-gap: 0.5rem;
+  column-gap: 1rem;
   display: flex;
+  justify-content: space-between;
   padding: 0.75rem;
+  width: 24rem;
 }
 
 .normal {
