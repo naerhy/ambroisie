@@ -3,9 +3,6 @@ import { store } from "./store";
 import Cookies from "js-cookie";
 import Header from "./components/Header.vue";
 import Notifications from "./components/Notifications.vue";
-import { useRoute } from "vue-router";
-
-const route = useRoute();
 
 const token = Cookies.get("token");
 if (token) {
