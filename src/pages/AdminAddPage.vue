@@ -43,6 +43,7 @@ async function handleSubmitInputs(inputs: Inputs) {
       :base-inputs="baseMeal"
       :with-file-input="true"
       btn-text="Ajouter"
+      :error-msg="error?.message"
     />
   </section>
 </template>
