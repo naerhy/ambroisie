@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue";
-import { cookingTimes, difficulties, types } from "../shared";
+import { baseURL, cookingTimes, difficulties, types } from "../shared";
 import { useAxios } from "../composables";
 import { store } from "../store";
 import Loading from "../components/Loading.vue";
@@ -17,7 +17,7 @@ const { isFetching, data, error, fetch } = useAxios<Meal[]>({ immediate: true })
 const meals = ref<MealWithVisibility[]>([]);
 
 onMounted(async () => {
-  await fetch({ method: "GET", url: "https://naerhy.ovh/ambroisie/meals" });
+  await fetch({ method: "GET", url: `${baseURL}/ambroisie/meals` });
   if (data.value) {
     meals.value = data.value.map((meal) => ({ ...meal, isVisible: true }));
   }
@@ -84,7 +84,7 @@ watch(() => store.filters, (filters) => {
       <ul v-else>
         <li v-for="meal in meals" v-show="meal.isVisible" :key="meal.id">
           <RouterLink :to="`/repas/${meal.id}`">
-            <img :src="meal.thumbnailURL" :alt="`Photo du repas ${meal.name}`" />
+            <img :src="`${baseURL}/${meal.thumbnailURL}`" :alt="`Photo du repas ${meal.name}`" />
             <div>
               <h3>{{ meal.name }}</h3>
             </div>

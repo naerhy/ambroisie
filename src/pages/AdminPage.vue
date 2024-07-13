@@ -5,6 +5,7 @@ import Modal from "../components/Modal.vue";
 import Error from "../components/Error.vue";
 import Loading from "../components/Loading.vue";
 import { store } from "../store";
+import { baseURL } from "../shared";
 
 import type { Meal } from "../shared";
 
@@ -20,13 +21,13 @@ const { data: deletedMeal, error: errorDelete, fetch: fetchDelete } = useAxios<M
 const mealToDelete = ref<Meal | null>(null);
 
 onMounted(async () => {
-  await fetchMeals({ method: "GET", url: "https://naerhy.ovh/ambroisie/meals" });
+  await fetchMeals({ method: "GET", url: `${baseURL}/ambroisie/meals` });
 });
 
 async function handleConfirmDelete(id: number) {
   await fetchDelete({
     method: "DELETE",
-    url: `https://naerhy.ovh/ambroisie/meals/${id}`,
+    url: `${baseURL}/ambroisie/meals/${id}`,
     headers: {
       Authorization: `Bearer ${store.token}`
     }

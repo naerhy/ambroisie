@@ -3,6 +3,7 @@ import { store } from "../store";
 import { useRouter } from "vue-router";
 import { useAxios } from "../composables";
 import MealInputs from "../components/MealInputs.vue";
+import { baseURL } from "../shared";
 
 import type { Inputs, Meal } from "../shared";
 
@@ -22,7 +23,7 @@ const { data, error, fetch } = useAxios<Meal>();
 async function handleSubmitInputs(inputs: Inputs) {
   await fetch({
     method: "POST",
-    url: "https://naerhy.ovh/ambroisie/meals",
+    url: `${baseURL}/ambroisie/meals`,
     headers: {
       Authorization: `Bearer ${store.token}`
     },

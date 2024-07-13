@@ -24,3 +24,5 @@ export interface Inputs extends Omit<Meal, "id" | "filename" | "photoURL" | "thu
 export const types = ["Petit-déjeuner", "Déjeuner", "Goûter", "Dîner"];
 export const difficulties = ["Facile", "Moyenne", "Difficile"];
 export const cookingTimes = ["0-10 minutes", "10-30 minutes", "30-60 minutes", "Plus d'une heure"];
+
+export const baseURL = "https://naerhy.ovh";

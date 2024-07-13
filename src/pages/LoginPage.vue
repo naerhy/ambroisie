@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { store } from "../store";
 import { useRouter } from "vue-router";
 import { useAxios } from "../composables";
+import { baseURL } from "../shared";
 
 const router = useRouter();
 
@@ -14,7 +15,7 @@ const password = ref("");
 async function handleSubmit() {
   await fetch({
     method: "POST",
-    url: "https://naerhy.ovh/ambroisie/auth",
+    url: `${baseURL}/ambroisie/auth`,
     data: {
       password: password.value
     }

@@ -6,6 +6,7 @@ import { store } from "../store";
 import MealInputs from "../components/MealInputs.vue";
 import FileInput from "../components/FileInput.vue";
 import Error from "../components/Error.vue";
+import { baseURL } from "../shared";
 
 import type { Inputs, Meal } from "../shared";
 
@@ -25,13 +26,13 @@ const { data: mealPatchPhoto, error: errorPatchPhoto, fetch: fetchPatchPhoto } =
 const photoBase64 = ref("");
 
 onMounted(async () => {
-  await fetchGet({ method: "GET", url: `https://naerhy.ovh/ambroisie/meals/${props.id}` });
+  await fetchGet({ method: "GET", url: `${baseURL}/ambroisie/meals/${props.id}` });
 });
 
 async function handleSubmitModify(inputs: Inputs) {
   await fetchPatch({
     method: "PATCH",
-    url: `https://naerhy.ovh/ambroisie/meals/${props.id}`,
+    url: `${baseURL}/ambroisie/meals/${props.id}`,
     headers: {
       Authorization: `Bearer ${store.token}`
     },
@@ -46,7 +47,7 @@ async function handleSubmitModify(inputs: Inputs) {
 async function handleSubmitModifyPhoto() {
   await fetchPatchPhoto({
     method: "PATCH",
-    url: `https://naerhy.ovh/ambroisie/meals/photo/${props.id}`,
+    url: `${baseURL}/ambroisie/meals/photo/${props.id}`,
     headers: {
       Authorization: `Bearer ${store.token}`
     },

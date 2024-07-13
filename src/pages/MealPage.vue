@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { useAxios } from "../composables";
-import { cookingTimes, difficulties, types } from "../shared";
+import { baseURL, cookingTimes, difficulties, types } from "../shared";
 import Error from "../components/Error.vue";
 import Loading from "../components/Loading.vue";
 
@@ -12,7 +12,7 @@ const props = defineProps<{ id: string }>();
 const { data: meal, error, fetch } = useAxios<Meal>({ immediate: true });
 
 onMounted(async () => {
-  await fetch({ method: "GET", url: `https://naerhy.ovh/ambroisie/meals/${props.id}` });
+  await fetch({ method: "GET", url: `${baseURL}/ambroisie/meals/${props.id}` });
 });
 </script>
 
@@ -37,7 +37,7 @@ onMounted(async () => {
         <div>{{ meal.vegetarian ? "Oui" : "Non" }}</div>
       </div>
     </div>
-    <img :src="meal.photoURL" :alt="`Photo du repas ${meal.name}`" />
+    <img :src="`${baseURL}/${meal.photoURL}`" :alt="`Photo du repas ${meal.name}`" />
     <div v-if="meal.recipe" class="ingr-dir">
       <div>
         <h3>Ingrédients</h3>
